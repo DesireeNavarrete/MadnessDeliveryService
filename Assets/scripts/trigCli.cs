@@ -49,6 +49,7 @@ public class trigCli : MonoBehaviour
 
     void Update()
     {
+        numPed = pedActivos.Count;
 
         print("cosa: " + cosa);
 
@@ -67,10 +68,10 @@ public class trigCli : MonoBehaviour
 
 
         //PARA $$$$$
-        if (numPed == 0 && !paraCobrar)
-        {
-            //paraCobrar = true;
-        }
+        //if (numPed == 0 && !paraCobrar)
+        //{
+        //    //paraCobrar = true;
+        //}
 
 
         //AÑADE PEDIDOS AL ARRAY
@@ -91,7 +92,6 @@ public class trigCli : MonoBehaviour
                     for (int i = 0; i < Random.RandomRange(2, 6); i++)
                     {
                         pedActivos.Add(coctel.bebidas[Random.RandomRange(0, 3)]);
-                        numPed = pedActivos.Count;
                     }
                 }
             }
@@ -126,16 +126,16 @@ public class trigCli : MonoBehaviour
                 if (life1 <= ped1.GetComponentInChildren<Slider>().maxValue && life1 >= ped1.GetComponentInChildren<Slider>().maxValue / 2)
                 {
                     print("-puntos");
-                    dineros+=50;
+                    //dineros+=50;
                     dinero.GetComponent<Text>().text = dineros.ToString();
 
                 }
 
                 //50 puntos, si la vida esta entre el 50% y el 0%
-                if (life1 <= ped1.GetComponentInChildren<Slider>().maxValue / 2 && life1>0)
+                if (life1 <= ped1.GetComponentInChildren<Slider>().maxValue / 2 && life1 > 0)
                 {
                     print("+puntos");
-                    dineros += 100;
+                    // dineros += 100;
                     dinero.GetComponent<Text>().text = dineros.ToString();
 
                 }
@@ -147,9 +147,10 @@ public class trigCli : MonoBehaviour
                 print("quita ui");
                 //if (ped1.transform.GetChild(0) != null)
                 //{
-                //    ped1.transform.GetChild(0).gameObject.SetActive(false);
+                //    //ped1.transform.GetChild(0).gameObject.SetActive(false);
 
                 //}
+                    pedActivos.RemoveAt(0);
 
 
             }
@@ -157,32 +158,29 @@ public class trigCli : MonoBehaviour
 
             //-----SIGUIENTE PEDIDO--------------------
             //se espera 7s para poner el siguiente ped, poner en aleatorio entre 4 y 10 por ejemplo?¿?¿?¿?
-            if (contt1 == 7)
+            if (contt1 == 1)
             {
 
-                print("sale ui");
+                print("sale ui nueva");
                 //eliminar el pedido de la lista para que spwnee el siguiente y reset contadores
-                pedActivos.RemoveAt(0);
                 entregadoCli1 = false;
                 contt1 = 0;
                 contt_1 = 0;
+                Destroy(ped1.transform.GetChild(0).gameObject);
 
 
                 //UI ---------------$$$$$
-                if (numPed == 0 && UI_Manager.start)
-                {
-                    paraCobrar = true;
-                    GameObject x = Instantiate(dinero) as GameObject;
-                    x.transform.SetParent(ped1.transform, false);
-                    x.transform.localScale = new Vector3(0.01f, 0.01f);
-                    print("cobrar");
-                    //con vida o sin vida para cobrar????
+                //if (numPed == 0 && UI_Manager.start)
+                //{
+                //    paraCobrar = true;
+                //    GameObject x = Instantiate(dinero) as GameObject;
+                //    x.transform.SetParent(ped1.transform, false);
+                //    x.transform.localScale = new Vector3(0.01f, 0.01f);
+                //    print("cobrar");
+                //    //con vida o sin vida para cobrar????
 
-                }
+                //}
             }
-
-
-
         }
 
         //---------------- UI VIDA PEDIDO ---------------------------------------------------------------------------------------
@@ -199,9 +197,7 @@ public class trigCli : MonoBehaviour
             {
                 vida1 = true;
                 lifeF1 = 0;
-
             }
-
         }
 
         if (vida1)//cuando se acaba la vida
@@ -209,9 +205,7 @@ public class trigCli : MonoBehaviour
             Destroy(ped1.transform.GetChild(0).gameObject);
             pedActivos.RemoveAt(0);
             vida1 = false;
-
         }
-
 
         //---------------- IMAGEN DE PEDIDO ---------------------------------------------------------------------------------------
         //si hay pedidos para el cliente1, pone la imagen del coctel que toca
@@ -295,10 +289,10 @@ public class trigCli : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionStay(Collision col)
     {
         //entrega de pedido del cliente1
-        if (col.transform.tag == "objetos")
+        if (col.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
         {
             print("col plato+objeto " + col.transform.name);
             cosa = col.transform.name;
@@ -314,8 +308,7 @@ public class trigCli : MonoBehaviour
 
                 objetos.colCajasObj.Remove(col.transform.name);
 
-                Destroy(col.gameObject, 5);
-
+                Destroy(col.gameObject);
 
             }
         }
