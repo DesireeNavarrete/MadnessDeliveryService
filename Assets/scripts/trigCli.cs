@@ -126,7 +126,7 @@ public class trigCli : MonoBehaviour
                 if (life1 <= ped1.GetComponentInChildren<Slider>().maxValue && life1 >= ped1.GetComponentInChildren<Slider>().maxValue / 2)
                 {
                     print("-puntos");
-                    //dineros+=50;
+                    dineros+=50;
                     dinero.GetComponent<Text>().text = dineros.ToString();
 
                 }
@@ -135,7 +135,7 @@ public class trigCli : MonoBehaviour
                 if (life1 <= ped1.GetComponentInChildren<Slider>().maxValue / 2 && life1 > 0)
                 {
                     print("+puntos");
-                    // dineros += 100;
+                    dineros += 100;
                     dinero.GetComponent<Text>().text = dineros.ToString();
 
                 }
@@ -257,6 +257,7 @@ public class trigCli : MonoBehaviour
     {
         if (other.transform.tag == "cli")
         {
+            print("cli for coll");
             cli1 = true;
             other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             if (pedActivos.Count == 0 && dineros > 0)
@@ -272,7 +273,31 @@ public class trigCli : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
+        {
+            print("col plato+objeto " + other.transform.name);
+            cosa = other.transform.name;
+            cosa = cosa.Remove(cosa.Length - 1);
 
+            if (cosa == pedActivos[0])
+            {
+                //eliminar el obj entregado del canvas
+                entregadoCli1 = true;
+                //coctel.pedActivos1.RemoveAt(0);
+                other.enabled = false;
+                detector.cogido = false;
+
+                objetos.colCajasObj.Remove(other.transform.name);
+
+                Destroy(other.gameObject);
+
+            }
+        }
+
+        if (other.transform.tag == "Player")
+        {
+            player = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -292,31 +317,36 @@ public class trigCli : MonoBehaviour
     private void OnCollisionStay(Collision col)
     {
         //entrega de pedido del cliente1
-        if (col.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
-        {
-            print("col plato+objeto " + col.transform.name);
-            cosa = col.transform.name;
-            cosa = cosa.Remove(cosa.Length - 1);
+        //if (col.transform.tag == "objetos")
+        //{
+        //    print("obj coll");
+        //    col.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //}
+        //if (col.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
+        //{
+        //    print("col plato+objeto " + col.transform.name);
+        //    cosa = col.transform.name;
+        //    cosa = cosa.Remove(cosa.Length - 1);
 
-            if (cosa == pedActivos[0])
-            {
-                //eliminar el obj entregado del canvas
-                entregadoCli1 = true;
-                //coctel.pedActivos1.RemoveAt(0);
-                col.collider.enabled = false;
-                detector.cogido = false;
+        //    if (cosa == pedActivos[0])
+        //    {
+        //        eliminar el obj entregado del canvas
+        //        entregadoCli1 = true;
+        //        coctel.pedActivos1.RemoveAt(0);
+        //        col.collider.enabled = false;
+        //        detector.cogido = false;
 
-                objetos.colCajasObj.Remove(col.transform.name);
+        //        objetos.colCajasObj.Remove(col.transform.name);
 
-                Destroy(col.gameObject);
+        //        Destroy(col.gameObject);
 
-            }
-        }
+        //    }
+        //}
 
-        if (col.transform.tag == "Player")
-        {
-            player = true;
-        }
+        //if (col.transform.tag == "Player")
+        //{
+        //    player = true;
+        //}
 
 
     }
