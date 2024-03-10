@@ -33,7 +33,7 @@ public class detectorEmi : MonoBehaviour
     {
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "caja")
         {
-            other.GetComponent<Renderer>().material.SetColor("_EmissionColor", c2);
+            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
             //print("emisivo");
         }
     }
@@ -44,7 +44,7 @@ public class detectorEmi : MonoBehaviour
 
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "cajaA")
         {
-            other.GetComponent<Renderer>().material.SetColor("_EmissionColor", c2);
+            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
         }
 
         
@@ -53,7 +53,7 @@ public class detectorEmi : MonoBehaviour
     {
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "cajaA")
         {
-            other.GetComponent<Renderer>().material.SetColor("_EmissionColor",c1);
+            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor",c1);
         }
     }
 }

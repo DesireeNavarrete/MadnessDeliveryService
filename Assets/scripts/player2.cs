@@ -63,7 +63,6 @@ public class player2 : MonoBehaviour
     public void submit2()
     {
         //Input.GetButton(KeyCode.);
-        print("putas");
     }
 
 

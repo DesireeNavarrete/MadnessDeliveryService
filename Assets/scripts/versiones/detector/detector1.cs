@@ -10,12 +10,12 @@ public class detector1 : MonoBehaviour
     GameObject[] caja;
     public GameObject[] objs;
     GameObject pj, pelota;
-    public bool cogido,paraCoger;
+    public bool cogido, paraCoger;
     Rigidbody rigiObj;
 
     private void Awake()
     {
-        
+
         pelota = Instantiate(obj1, sp.transform.position, Quaternion.identity) as GameObject;
         rigiObj = pelota.GetComponent<Rigidbody>();
         rigiObj.useGravity = false;
@@ -48,13 +48,16 @@ public class detector1 : MonoBehaviour
             StartCoroutine(gravedadNo());
             //rigiObj.constraints = RigidbodyConstraints.FreezePosition;
         }
-        if (!cogido && paraCoger==false)
+        if (!cogido && paraCoger == false)
         {
             StartCoroutine(gravedad());
             paraCoger = true;
         }
 
-
+        if (Input.GetButtonDown("Submit"))
+        {
+            print("hiii");
+        }
 
     }
 
@@ -131,7 +134,7 @@ public class detector1 : MonoBehaviour
             }
 
             //soltar
-            if (Input.GetButtonDown("Submit") && cogido && paraCoger==false)
+            if (Input.GetButtonDown("Submit") && cogido && paraCoger == false)
             {
                 print("soltado");
 
@@ -156,7 +159,7 @@ public class detector1 : MonoBehaviour
 
 
         }
-        
+
     }
 
     /*---------------------------------BUGS-----------------------------------
