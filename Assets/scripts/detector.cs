@@ -381,7 +381,7 @@ public class detector : MonoBehaviour
         {
             playerMesa = true;
             string col5 = other.transform.name;
-            print("col5: " + col5);
+            //print("col5: " + col5);
 
 
             /*string hijo = gameObject.transform.GetChild(0).gameObject.name;

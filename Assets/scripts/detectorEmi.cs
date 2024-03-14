@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class detectorEmi : MonoBehaviour
 {
-/*---------------------------AÑADIR/ARREGLAR-------------------------------------
- *solo un obj con el emisivo a la vez
- * raycast?
- *      
- *  
- *      
- * 
- * 
- * 
- */
+    /*---------------------------AÑADIR/ARREGLAR-------------------------------------
+     *solo un obj con el emisivo a la vez
+     * raycast?
+     *      
+     *  
+     *      
+     * 
+     * 
+     * 
+     */
     public Color c1, c2;
     //Material myRenderer;
 
@@ -26,15 +26,19 @@ public class detectorEmi : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "caja")
         {
-            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
-            //print("emisivo");
+            print(other.transform.name);
+            foreach (Transform child in other.transform)
+            {
+                child.gameObject.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
+                print(child);
+            }
         }
     }
 
@@ -44,16 +48,22 @@ public class detectorEmi : MonoBehaviour
 
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "cajaA")
         {
-            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
+            foreach (Transform child in other.gameObject.transform)
+            {
+                child.gameObject.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
+            }
         }
 
-        
+
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "cajaA")
         {
-            other.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor",c1);
+            foreach (Transform child in other.gameObject.transform)
+            {
+                child.gameObject.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c1);
+            }
         }
     }
 }

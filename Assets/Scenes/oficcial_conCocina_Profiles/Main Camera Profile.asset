@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.34
+    value: 0.2
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -112,7 +112,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 3.85
+    value: 0.83
   threshold:
     overrideState: 0
     value: 1
@@ -159,7 +159,7 @@ MonoBehaviour:
     value: 1
   gradingMode:
     overrideState: 0
-    value: 1
+    value: 0
   externalLut:
     overrideState: 0
     value: {fileID: 0}
@@ -200,13 +200,13 @@ MonoBehaviour:
     value: -67.5
   colorFilter:
     overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 1, g: 0.96602696, b: 0.8726415, a: 1}
   hueShift:
     overrideState: 0
     value: 11
   saturation:
     overrideState: 1
-    value: 40.4
+    value: 36.6
   brightness:
     overrideState: 0
     value: 0
