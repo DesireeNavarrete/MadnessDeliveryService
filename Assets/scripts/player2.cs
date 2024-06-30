@@ -15,7 +15,7 @@ public class player2 : MonoBehaviour
     //bool rotado;
     //float rotasion=0;
     //public Transform w,a,s,d,wd,wa,sa,sd;
-    float vel = 8;
+    float vel = 2.5f;
 
     //public Joystick analogico;
 
