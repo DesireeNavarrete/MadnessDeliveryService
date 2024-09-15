@@ -38,8 +38,13 @@ public class objetos : MonoBehaviour
 
     private void Update()
     {
-        
-        
+        if (transform.parent == null)
+        {
+            gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        }else
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+
         if (colPlato && plato.playerPlato)
         {
             //posEnCentro(gameObject.transform, plati.transform, plati.transform.position.y / 2);
@@ -127,7 +132,6 @@ public class objetos : MonoBehaviour
             mesaOCajaYObj = true;
             colCajasObj.Add(col.transform.name);
             plato.posEnCentro(gameObject.transform, col.transform, col.transform.localScale.y / 2);
-
 
         }
         if (col.transform.tag == "plato")

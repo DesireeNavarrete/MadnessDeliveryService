@@ -28,6 +28,7 @@ TagManager:
   - cli
   - mezcla
   - cajaAma
+  - cajaM
   layers:
   - Default
   - TransparentFX

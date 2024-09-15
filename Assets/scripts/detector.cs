@@ -66,20 +66,8 @@ public class detector : MonoBehaviour
     {
 
 
-        print("Cogido: " + cogido);
-
-        if (Input.GetButtonDown("Acction"))
-        {//boton de accion, mezclar por ejemplo
-            print("y");
-        }
-
-
-        //printea la lista de colision de objetos
-        foreach (string col in objetos.colCajasObj)
-        //foreach (string col in objsPlayer)
-        {
-            //print("col:"+col);
-        }
+        //print("Cogido: " + cogido);
+        
 
         if (cogido)
         {
@@ -89,34 +77,36 @@ public class detector : MonoBehaviour
         {
             paraCoger = true;
         }
-
-        //print("playerObj: " + playerObj);
-        //print("playerMesa: " + playerMesa);
-        //print("playerPlato: " + playerPlato);
-        //print("playerObjPlato: " + playerObjPlato);
-
-        //si el plato es hijo de detector con obj
-        /* if (gameObject.transform.Find("plato") && gameObject.transform.Find("plato").transform.Find("obj"))
-         {
-             print("hijo plato con obj");
-             playerObjPlato = true;
-         }
-         else
-             playerObjPlato = false;
-         */
-
+        
 
         if (gameObject.transform.parent == null)
         {
             cogido = false;
         }
+        
 
+        //soltar obj sin que colisione con mesa(en el suelo)
+        //if (Input.GetButtonDown("Acction") && cogido && !paraCoger && !colBasura && !entregaTrg)
+        if (Input.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count == 1 && !colBasura && !entregaTrg)
+        //if (CrossPlatformInputManager.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count ==1 && !colBasura && !entregaTrg)
+        {
+            //print("soltar suelo");
 
-        //trigg con plato y objA
-        /* if (objsPlayer.Contains("plato") && objsPlayer.Contains("objA"))
-         {
-             //print("plato y obj");
-         }*/
+            //gameObject.transform.GetChild(0).GetComponent<CapsuleCollider>().enabled = true;
+            if (transform.childCount == 1 && !playerMesa)
+            {
+
+                print("soltado obj suelo");
+                transform.GetChild(0).transform.parent = null;
+                cogido = false;
+                //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+                transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
+                //transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                //transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                playerObj = false;
+
+            }
+        }
 
 
     }
@@ -240,7 +230,7 @@ public class detector : MonoBehaviour
         }
 
         //sacar objetos de la caja Roja
-        if (other.transform.tag == "cajaR")
+        if (other.transform.tag == "cajaM")
         {
 
             string col = other.transform.name;
@@ -248,14 +238,14 @@ public class detector : MonoBehaviour
             if (Input.GetButtonDown("Acction") && !cogido && gameObject.transform.childCount == 0)
             //if (CrossPlatformInputManager.GetButtonDown("Acction") && !cogido && gameObject.transform.childCount == 0)
             {
-                print("caja rojo");
+                print("caja morado");
                 //if (!objetos.colCajasObj.Contains(col) && objsPlayer.Count == 0)
                 //{
                 //solo saca el objeto si no tiene ningun hijo mas, para que solo coja un obj a la vez y no instancie si lleva un plato
                 //if (transform.childCount == 0)
                 //{
                 pelota = Instantiate(obj3, pos.transform.position, Quaternion.identity) as GameObject;
-                pelota.name = "objR" + nR;
+                pelota.name = "objM" + nR;
                 nR++;
                 pelota.transform.SetParent(gameObject.transform);
                 pelota.GetComponent<Rigidbody>().useGravity = false;
@@ -296,6 +286,8 @@ public class detector : MonoBehaviour
                 other.transform.SetParent(gameObject.transform);
                 other.GetComponent<Rigidbody>().useGravity = false;
                 other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //other.GetComponent<CapsuleCollider>().enabled = false;
+
                 //para que el objeto se quede a la distancia que yo quiero
                 other.transform.position = pos.transform.position;
                 //coge la rotacion del pj para que el obj siempre este recto
@@ -318,7 +310,7 @@ public class detector : MonoBehaviour
 
                     print("cogido suelo");
                     other.transform.SetParent(gameObject.transform);
-                    other.GetComponent<Rigidbody>().useGravity = false;
+                    //other.GetComponent<Rigidbody>().useGravity = false;
                     other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     //para que el objeto se quede a la distancia que yo quiero
                     other.transform.position = pos.transform.position;
@@ -326,6 +318,7 @@ public class detector : MonoBehaviour
                     //other.transform.rotation = Quaternion.Slerp(other.transform.rotation, gameObject.transform.rotation, Time.deltaTime * 50);
                     cogido = true;
                     playerObj = true;
+                    //other.GetComponent<CapsuleCollider>().enabled = false;
 
                     //para que coja el plato si colisiona con plato y obj
                     if (platosPlayer.Count > 0)
@@ -339,27 +332,27 @@ public class detector : MonoBehaviour
 
 
 
-            //soltar obj sin que colisione con mesa(en el suelo)
-            //if (Input.GetButtonDown("Acction") && cogido && !paraCoger && !colBasura && !entregaTrg)
-            if (Input.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count == 1 && !colBasura && !entregaTrg)
-            //if (CrossPlatformInputManager.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count ==1 && !colBasura && !entregaTrg)
-            {
-                //print("no mesilla");
+            ////soltar obj sin que colisione con mesa(en el suelo)
+            ////if (Input.GetButtonDown("Acction") && cogido && !paraCoger && !colBasura && !entregaTrg)
+            //if (Input.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count == 1 && !colBasura && !entregaTrg)
+            ////if (CrossPlatformInputManager.GetButtonDown("Acction") && cogido && !paraCoger && objsPlayer.Count ==1 && !colBasura && !entregaTrg)
+            //{
+            //    print("soltar suelo");
 
-                if (transform.childCount == 1 && !playerMesa)
-                {
+            //    if (transform.childCount == 1 && !playerMesa)
+            //    {
 
-                    print("soltado obj suelo");
-                    other.transform.parent = null;
-                    cogido = false;
-                    other.GetComponent<Rigidbody>().isKinematic = false;
-                    other.GetComponent<Rigidbody>().useGravity = true;
-                    other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                    other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-                    playerObj = false;
+            //        print("soltado obj suelo");
+            //        other.transform.parent = null;
+            //        cogido = false;
+            //        other.GetComponent<Rigidbody>().isKinematic = false;
+            //        other.GetComponent<Rigidbody>().useGravity = true;
+            //        other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            //        other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            //        playerObj = false;
 
-                }
-            }
+            //    }
+            //}
 
 
             //BASURAAAAAAAAAAAAAAAAAAAAAAAAAA

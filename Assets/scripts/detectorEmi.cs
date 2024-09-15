@@ -33,11 +33,11 @@ public class detectorEmi : MonoBehaviour
     {
         if (other.gameObject.tag == "mesa" || other.gameObject.tag == "cajaV" || other.gameObject.tag == "cajaR" || other.gameObject.tag == "caja")
         {
-            print(other.transform.name);
+            //print(other.transform.name);
             foreach (Transform child in other.transform)
             {
                 child.gameObject.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", c2);
-                print(child);
+                //print(child);
             }
         }
     }

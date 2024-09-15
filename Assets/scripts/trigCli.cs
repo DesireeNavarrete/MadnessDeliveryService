@@ -36,7 +36,7 @@ public class trigCli : MonoBehaviour
 
 
     public static bool player;
-
+    public GameObject detector_;
 
     void Start()
     {
@@ -51,7 +51,7 @@ public class trigCli : MonoBehaviour
     {
         numPed = pedActivos.Count;
 
-        print("cosa: " + cosa);
+        //print("cosa: " + cosa);
 
         /*if(detector.datafono && player)
         {
@@ -273,10 +273,12 @@ public class trigCli : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
+        //Si... detector y detectir getchild >0.........bool 
+        if (other.transform.tag == "detector" && Input.GetButtonDown("Acction") && detector.cogido)
+        //if (other.transform.tag == "objetos" && Input.GetButtonDown("Acction"))
         {
-            print("col plato+objeto " + other.transform.name);
-            cosa = other.transform.name;
+            print("col plato+objeto " + detector_.gameObject.transform.GetChild(0).name);
+            cosa = detector_.gameObject.transform.GetChild(0).name;
             cosa = cosa.Remove(cosa.Length - 1);
 
             if (cosa == pedActivos[0])
